@@ -1,102 +1,85 @@
-1. Escenario & Reto
-Estás en una ciudad desconocida. El cielo está nublado, los caminos bloqueados por desvíos misteriosos, y tu GPS acaba de decir:
+# Algoritmos de Pathfinding: BFS, Dijkstra y A*
 
-“Buena suerte, estás por tu cuenta.”
+Este repositorio contiene implementaciones y explicaciones de los tres algoritmos más fundamentales para la búsqueda de rutas y navegación en grafos o cuadrículas.
 
-Te giras y ves una cabina con un cartel oxidado que dice:
-“THE HUDDLE — Calculadora de Rutas para los Elegidos”
+---
 
-Al ingresar, la pantalla parpadea y aparece un mensaje:
+## 1. BFS (Breadth-First Search)
+La **Búsqueda en Anchura** es el algoritmo más sencillo para encontrar el camino más corto en grafos no ponderados (donde todos los pasos cuestan lo mismo).
 
-"Solo quien domine los caminos podrá guiar a otros. Tu misión: crear una herramienta que encuentre la mejor ruta posible… incluso cuando el mundo parece un laberinto sin salida."
+* **Lógica:** Explora todos los nodos a una distancia *k* antes de pasar a los nodos a distancia *k+1*. Utiliza una estructura de datos tipo **Cola (FIFO)**.
+* **Ideal para:** Encontrar el número mínimo de saltos en redes sociales o resolver laberintos donde cada movimiento vale 1.
+* **Punto débil:** No sabe manejar caminos con diferentes costos (ej. terreno difícil o tráfico).
 
-🎯 Así comienza tu reto. Tendrás que construir una calculadora de rutas desde cero. Una herramienta que analice un mapa lleno de obstáculos y descubra el camino más corto entre dos puntos, esquivando lo imposible y optimizando cada movimiento.
 
-2. Habilidades Que Vas a Necesitar
-📍Modelado de mapas con matrices bidimensionales.
 
-🧠 Algoritmos de búsqueda de rutas como Dijkstra, BFS o A*.
+---
 
-🛠️ Manipulación de coordenadas, obstáculos y lógica de caminos alternativos.
+## 2. Algoritmo de Dijkstra
+Es el estándar para encontrar la ruta más corta cuando los caminos tienen **pesos o costos diferentes**. Es una búsqueda "uniforme".
 
-🧪 Validación y visualización de rutas en consola.
+* **Lógica:** Prioriza siempre el nodo que tenga el costo acumulado más bajo desde el origen. Utiliza una **Cola de Prioridad**.
+* **Funcionamiento:** Se expande en todas las direcciones de forma radial, asegurándose de que al llegar al destino, el camino tomado sea el de menor costo total.
+* **Ideal para:** Sistemas de mapas donde algunas carreteras son más rápidas que otras.
 
-🧰 Estructuras de datos eficientes y configuraciones dinámicas.
 
-3. Requisitos Obligatorios (La Ruta a Seguir)
-1. Mapa Interactivo:
 
-Representa el mundo como una matriz bidimensional.
+---
 
-Usa valores para diferenciar terrenos:
+## 3. Algoritmo A* (A-Estrella)
+Es una optimización de Dijkstra y uno de los algoritmos más utilizados en la industria de los videojuegos debido a su eficiencia.
 
-0: Camino libre.
+* **Lógica:** Utiliza una **heurística** (una estimación) para "adivinar" qué tan lejos está el objetivo. Su decisión se basa en la fórmula:
+    $$f(n) = g(n) + h(n)$$
+    * $g(n)$: Costo real desde el inicio.
+    * $h(n)$: Estimación hasta el final (ej. distancia euclidiana).
+* **Ventaja:** A diferencia de Dijkstra, A* no explora en todas direcciones; se dirige directamente hacia el objetivo, ahorrando mucho tiempo de procesamiento.
 
-1: Edificio (obstáculo).
 
-2: Agua (obstáculo con ruta alternativa).
 
-3: Zonas bloqueadas temporalmente.
+---
 
-2. Punto de Inicio y Destino:
+## Cuadro Comparativo
 
-Permite al usuario ingresar coordenadas de inicio y fin.
+| Característica | BFS | Dijkstra | A* |
+| :--- | :--- | :--- | :--- |
+| **Tipo de Grafo** | No ponderado | Ponderado | Ponderado |
+| **Estrategia** | Anchura pura | Costo acumulado | Costo + Heurística |
+| **Garantiza óptimo** | Sí (en pesos iguales) | Sí | Sí (con heurística admisible) |
+| **Eficiencia** | Baja/Media | Media | Muy Alta |
 
-Valida que no caigan sobre un obstáculo ni fuera del mapa.
 
-3. Visualización del Mapa (versión CLI o GUI simple):
+---
 
-Representa caminos transitables como ., obstáculos como X, y la ruta más corta como *.
+## Explicacion de Codigo
 
-Actualiza el mapa en tiempo real al añadir obstáculos o recalcular rutas.
+Para ejecutar el codigo seria de la siguiente manera
+    
+    python game.py
 
-4. Algoritmo de Búsqueda de Ruta:
 
-Usa una estrategia lógica para encontrar el camino más corto, como BFS.
 
-Permite hallar rutas alternativas si hay obstáculos imprevistos.
+El codigo esta compuesto de esta manera 
 
-La solución debe ser clara, lógica y escalable.
+```
+import random
+import os
+import sys
 
-5. Parámetros Dinámicos:
+sys.setrecursionlimit(5000)
+```
 
-El tamaño del mapa debe ser configurable.
+- imprime lo necesario para poder usar todo esto 
 
-Permite agregar obstáculos sin modificar el código fuente.
 
-4. Entregables, Reglas y Bonus Opcionales
-Entregables:
+Definicion estetica 
 
-Un script en Python, JavaScript o C++.
 
-Un README corto explicando:
 
-Qué hiciste.
-
-Qué algoritmo usaste.
-
-Qué aprendiste.
-
-Reglas:
-
-Prioriza claridad, estructura y lógica. No hace falta una interfaz visual compleja.
-
-El código debe poder ejecutarse con diferentes tamaños de mapa y configuraciones.
-
-Bonus Opcionales:
-
-Implementa diferentes tipos de terreno con diferentes “costos de movimiento”.
-
-Agrega un sistema de niveles: rutas más difíciles, con más obstáculos y eventos especiales.
-
-Crea una función para simular tráfico temporal que obligue a recalcular rutas dinámicamente.
-
-Haz que el usuario pueda jugar con el mapa como si fuera una misión (modo explorador).
-
-🚀 ¿Estás Listo para Ser el Guía del Camino?
-El mapa no se escribe solo. Cada obstáculo que agregues, cada ruta que traces, y cada decisión que tome tu algoritmo cuenta.
-
-Creamos soluciones para el mundo real. Y cuando ese mundo se vuelve caótico, tú eres quien encuentra el camino.
-
-¿Preparado para guiar el rumbo?
-El destino... se calcula en código. 🧭✨
+    RESET = "\033[0m"
+    ROJO = "\033[31m"    # Muros
+    VERDE = "\033[32m"   # Inicio
+    AZUL = "\033[34m"    # Fin
+    BLANCO = "\033[37m"  # Pasillos
+    AMARILLO = "\033[33m" # Ruta
+    CIAN = "\033[36m"    # Agua
